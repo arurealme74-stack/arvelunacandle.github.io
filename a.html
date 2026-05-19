@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arveluna Candle - Lilin Aromaterapi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: #faf7f2;
+            color: #2c2b28;
+            line-height: 1.6;
+        }
+
+        /* ========== NAVIGASI ========== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e8dccc;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            font-weight: 900;
+            color: #b87c4e;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #2c2b28;
+            text-decoration: none;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #b87c4e;
+        }
+
+        .account-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-left: 0.5rem;
+        }
+
+        .account-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .account-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: #2c2b28;
+            stroke-width: 1.8;
+            fill: none;
+            transition: stroke 0.3s;
+        }
+
+        .account-icon:hover svg {
+            stroke: #b87c4e;
+        }
+
+        /* ========== BANNER SLIDE (CAROUSEL) ========== */
+        .banner-section {
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .banner-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+
+        .banner-slide {
+            min-width: 100%;
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .banner-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .banner-text {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+        }
+
+        .banner-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .banner-text p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .banner-btn {
+            padding: 0.8rem 2rem;
+            background: #b87c4e;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .banner-btn:hover {
+            background: #9a663e;
+            transform: scale(1.05);
+        }
+
+        .banner-prev, .banner-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.5);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+
+        .banner-prev:hover, .banner-next:hover {
+            background: rgba(255,255,255,0.8);
+        }
+
+        .banner-prev { left: 20px; }
+        .banner-next { right: 20px; }
+
+        .banner-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .banner-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+
+        .banner-dot.active {
+            background: #b87c4e;
+        }
+
+        /* ========== NEW ARRIVAL + SAMPING KOTAK PRODUK ========== */
+        .new-arrival-section {
+            padding: 5rem 5%;
+            background: #faf7f2;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #2c2b28;
+        }
+
+        .section-header h2 span {
+            color: #b87c4e;
+        }
+
+        .new-arrival-wrapper {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* Side kiri - New Arrival utama */
+        .featured-new {
+            flex: 1.2;
+            background: #e8dccc;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .featured-new:hover {
+            transform: translateY(-5px);
+        }
+
+        .featured-image {
+            height: 400px;
+            background: #d4c5a9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+        }
+
+        .featured-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .featured-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            background: #b87c4e;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .featured-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        /* Side kanan - Grid produk kecil */
+        .products-side {
+            flex: 2;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            height: 200px;
+            background: #f0ebdf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-info h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+        }
+
+        .product-aroma {
+            font-size: 0.8rem;
+            color: #b87c4e;
+            margin: 0.3rem 0;
+        }
+
+        .product-price {
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+
+        .product-old-price {
+            font-size: 0.8rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+            font-weight: normal;
+        }
+
+        /* ========== BAGIAN INFORMASI ========== */
+        .info-section {
+            background: #2c2b28;
+            color: #f0e6d0;
+            padding: 4rem 5%;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+        }
+
+        .info-card p, .info-card li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card li::before {
+            content: "🕯️";
+            margin-right: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: #b87c4e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: #ffd700;
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1917;
+            color: #999;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .banner-container {
+                height: 350px;
+            }
+
+            .banner-slide {
+                height: 350px;
+            }
+
+            .banner-text h2 {
+                font-size: 1.8rem;
+            }
+
+            .new-arrival-wrapper {
+                flex-direction: column;
+            }
+
+            .info-grid {
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== NAVIGASI ========== -->
+<nav class="navbar">
+    <div class="logo">Arveluna<span>Candle</span></div>
+    <ul class="nav-links">
+        <li><a href="#">Beranda</a></li>
+        <li><a href="#">Koleksi</a></li>
+        <li><a href="#">Tentang</a></li>
+        <li><a href="#">Kontak</a></li>
+        <li>
+            <div class="account-icon" id="accountBtn">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<!-- ========== BANNER SLIDE ========== -->
+<section class="banner-section">
+    <div class="banner-container">
+        <button class="banner-prev" id="bannerPrev">←</button>
+        <div class="banner-slides" id="bannerSlides">
+            <div class="banner-slide" style="background-image: linear-gradient(135deg, #b87c4e, #2c2b28);">
+                <div class="banner-text">
+                    <h2>New Arrival ✨</h2>
+                    <p>Koleksi terbaru lilin aromaterapi dengan wangi eksklusif</p>
+                    <button class="banner-btn" onclick="alert('Jelajahi koleksi baru!')">Lihat Koleksi →</button>
+                </div>
+            </div>
+            <div class="banner-slide" style="background-image: linear-gradient(135deg, #4a3a2a, #2c2b28);">
+                <div class="banner-text">
+                    <h2>Diskon 20% OFF</h2>
+                    <p>Untuk pembelian pertama Anda</p>
+                    <button class="banner-btn" onclick="alert('Gunakan kode: ARVELUNA20')">Dapatkan Promo</button>
+                </div>
+            </div>
+            <div class="banner-slide" style="background-image: linear-gradient(135deg, #6b5e4a, #3a3025);">
+                <div class="banner-text">
+                    <h2>Gratis Ongkir</h2>
+                    <p>Minimal belanja Rp200.000</p>
+                    <button class="banner-btn" onclick="alert('Syarat & ketentuan berlaku')">Belanja Sekarang</button>
+                </div>
+            </div>
+        </div>
+        <button class="banner-next" id="bannerNext">→</button>
+        <div class="banner-dots" id="bannerDots"></div>
+    </div>
+</section>
+
+<!-- ========== NEW ARRIVAL + SAMPING KOTAK PRODUK ========== -->
+<section class="new-arrival-section">
+    <div class="section-header">
+        <h2>New <span>Arrival</span></h2>
+    </div>
+    <div class="new-arrival-wrapper">
+        <!-- Side kiri: New Arrival utama -->
+        <div class="featured-new">
+            <div class="featured-image">
+                🕯️✨🌸
+            </div>
+            <div class="featured-info">
+                <div class="featured-badge">NEW!</div>
+                <h3>Midnight Blossom</h3>
+                <p>Perpaduan bunga malam yang misterius dan menenangkan</p>
+                <div class="featured-price">Rp129.000</div>
+                <button class="banner-btn" onclick="alert('Midnight Blossom ditambahkan ke keranjang')">Beli Sekarang</button>
+            </div>
+        </div>
+
+        <!-- Side kanan: Grid produk -->
+        <div class="products-side">
+            <div class="product-card" onclick="alert('Lavender Dream ditambahkan ke keranjang')">
+                <div class="product-image">🕯️💜</div>
+                <div class="product-info">
+                    <h4>Lavender Dream</h4>
+                    <div class="product-aroma">Lavender • Vanilla</div>
+                    <div class="product-price">Rp89.000 <span class="product-old-price">Rp120.000</span></div>
+                </div>
+            </div>
+            <div class="product-card" onclick="alert('Rose Garden ditambahkan ke keranjang')">
+                <div class="product-image">🕯️🌹</div>
+                <div class="product-info">
+                    <h4>Rose Garden</h4>
+                    <div class="product-aroma">Rose • Geranium</div>
+                    <div class="product-price">Rp125.000</div>
+                </div>
+            </div>
+            <div class="product-card" onclick="alert('Ocean Breeze ditambahkan ke keranjang')">
+                <div class="product-image">🕯️🌊</div>
+                <div class="product-info">
+                    <h4>Ocean Breeze</h4>
+                    <div class="product-aroma">Sea Salt • Cotton</div>
+                    <div class="product-price">Rp79.000 <span class="product-old-price">Rp99.000</span></div>
+                </div>
+            </div>
+            <div class="product-card" onclick="alert('Sandalwood Zen ditambahkan ke keranjang')">
+                <div class="product-image">🕯️🌿</div>
+                <div class="product-info">
+                    <h4>Sandalwood Zen</h4>
+                    <div class="product-aroma">Sandalwood • Patchouli</div>
+                    <div class="product-price">Rp110.000</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== BAGIAN INFORMASI ========== -->
+<section class="info-section">
+    <div class="info-grid">
+        <!-- Tentang Kami -->
+        <div class="info-card">
+            <h3>Tentang Kami</h3>
+            <p>Arveluna Candle hadir sejak 2024 dengan misi menghadirkan ketenangan melalui lilin aromaterapi berkualitas tinggi dari bahan alami.</p>
+            <p>Setiap lilin kami buat dengan penuh cinta untuk menciptakan suasana nyaman di ruangan Anda.</p>
+        </div>
+
+        <!-- Layanan -->
+        <div class="info-card">
+            <h3>Layanan</h3>
+            <ul>
+                <li>Pengiriman ke seluruh Indonesia</li>
+                <li>Garansi 100% uang kembali</li>
+                <li>Custom aroma untuk pesanan khusus</li>
+                <li>Gratis konsultasi aroma</li>
+                <li>Membership & poin rewards</li>
+            </ul>
+        </div>
+
+        <!-- Temukan Kami di -->
+        <div class="info-card">
+            <h3>Temukan Kami di</h3>
+            <p><strong>📍 Alamat:</strong><br>Jl. Raya Kebayoran Lama No. 123, Jakarta Selatan</p>
+            <p><strong>📞 Telepon:</strong><br>+62 812 3456 7890</p>
+            <p><strong>✉️ Email:</strong><br>hello@arveluna.com</p>
+            <div class="social-icons">
+                <div class="social-icon" onclick="alert('Instagram: @arveluna.candle')">📷</div>
+                <div class="social-icon" onclick="alert('Facebook: Arveluna Candle')">📘</div>
+                <div class="social-icon" onclick="alert('TikTok: @arveluna')">🎵</div>
+                <div class="social-icon" onclick="alert('Shopee: Arveluna Official')">🛍️</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div class="footer">
+    <p>&copy; 2024 Arveluna Candle. All rights reserved. | Lilin Aromaterapi untuk ketenangan Anda</p>
+</div>
+
+<script>
+    // ========== BANNER CAROUSEL ==========
+    const slides = document.getElementById('bannerSlides');
+    const prevBtn = document.getElementById('bannerPrev');
+    const nextBtn = document.getElementById('bannerNext');
+    const dotsContainer = document.getElementById('bannerDots');
+    const slideCount = document.querySelectorAll('.banner-slide').length;
+    let currentIndex = 0;
+    let autoInterval;
+
+    // Buat dots
+    function createDots() {
+        for (let i = 0; i < slideCount; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('banner-dot');
+            if (i === currentIndex) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    function updateDots() {
+        const dots = document.querySelectorAll('.banner-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    function goToSlide(index) {
+        if (index < 0) index = 0;
+        if (index >= slideCount) index = slideCount - 1;
+        currentIndex = index;
+        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+    }
+
+    function nextSlide() {
+        if (currentIndex < slideCount - 1) {
+            currentIndex++;
+        } else {
+            currentIndex = 0;
+        }
+        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+    }
+
+    function prevSlide() {
+        if (currentIndex > 0) {
+            currentIndex--;
+        } else {
+            currentIndex = slideCount - 1;
+        }
+        slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+    }
+
+    function startAutoSlide() {
+        autoInterval = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoSlide() {
+        clearInterval(autoInterval);
+    }
+
+    nextBtn.addEventListener('click', () => {
+        stopAutoSlide();
+        nextSlide();
+        startAutoSlide();
+    });
+    prevBtn.addEventListener('click', () => {
+        stopAutoSlide();
+        prevSlide();
+        startAutoSlide();
+    });
+
+    const bannerContainer = document.querySelector('.banner-container');
+    bannerContainer.addEventListener('mouseenter', stopAutoSlide);
+    bannerContainer.addEventListener('mouseleave', startAutoSlide);
+
+    createDots();
+    startAutoSlide();
+
+    // ========== INTERAKSI NAVIGASI ==========
+    document.getElementById('accountBtn').addEventListener('click', function() {
+        alert('Halaman Akun akan segera hadir ✨\nSilakan login atau daftar');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert(`Halaman ${this.innerText} akan segera hadir`);
+        });
+    });
+</script>
+
+</body>
+</html>
